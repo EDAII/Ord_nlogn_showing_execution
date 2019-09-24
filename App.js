@@ -7,10 +7,10 @@ import MergeSort from './src/algorithms/MergeSort';
 import ShellSort from './src/algorithms/ShellSort';
 
 // 0: slowest, 500: fastest
-const DEFAULT_SORT_SPEED = 24.7;
-const MAX_SPEED = 50;
-const MIN_SPEED = 1;
-const NUMBERS_AMOUNT = 100;
+const DEFAULT_SORT_SPEED = 5;
+const MAX_SPEED = 500;
+const MIN_SPEED = 0;
+const NUMBERS_AMOUNT = 50;
 
 export default class App extends React.Component {
   sortAlgorithm;
@@ -27,14 +27,14 @@ export default class App extends React.Component {
   }
 
   resetTimer() {
-    if (this.intervalId)
+    if (this.intervalId) {
       clearInterval(this.intervalId);
+    }
     this.intervalId = setInterval(() => {
-      if (!this.sortAlgorithm)
+      if (!this.sortAlgorithm) {
         return;
-      while (!this.sortAlgorithm.isCompleted() && !this.sortAlgorithm.next()) {
-
       }
+      while (!this.sortAlgorithm.isCompleted() && !this.sortAlgorithm.next()) {}
       this.setState(() => {
         return {
           data: this.sortAlgorithm.getData(),
@@ -44,14 +44,17 @@ export default class App extends React.Component {
   }
 
   generateRandomValues(amount) {
-    values = [];
-    for (var i = 0; i < amount; i++)
-      values[i] = parseInt(Math.random() * 100);
+    let values = [];
+    for (var i = 0; i < amount; i++) {
+      values[i] = parseInt(Math.random() * NUMBERS_AMOUNT + 1);
+    }
     return values;
   }
 
   setBubbleSort() {
-    this.sortAlgorithm = new BubbleSort(this.generateRandomValues(NUMBERS_AMOUNT));
+    this.sortAlgorithm = new BubbleSort(
+      this.generateRandomValues(NUMBERS_AMOUNT),
+    );
     this.setState(() => {
       return {
         data: this.sortAlgorithm.getData(),
@@ -60,7 +63,9 @@ export default class App extends React.Component {
   }
 
   setQuickSort() {
-    this.sortAlgorithm = new QuickSort(this.generateRandomValues(NUMBERS_AMOUNT));
+    this.sortAlgorithm = new QuickSort(
+      this.generateRandomValues(NUMBERS_AMOUNT),
+    );
     this.setState(() => {
       return {
         data: this.sortAlgorithm.getData(),
@@ -69,7 +74,9 @@ export default class App extends React.Component {
   }
 
   setMergeSort() {
-    this.sortAlgorithm = new MergeSort(this.generateRandomValues(NUMBERS_AMOUNT));
+    this.sortAlgorithm = new MergeSort(
+      this.generateRandomValues(NUMBERS_AMOUNT),
+    );
     this.setState(() => {
       return {
         data: this.sortAlgorithm.getData(),
@@ -78,7 +85,9 @@ export default class App extends React.Component {
   }
 
   setShellSort() {
-    this.sortAlgorithm = new ShellSort(this.generateRandomValues(NUMBERS_AMOUNT));
+    this.sortAlgorithm = new ShellSort(
+      this.generateRandomValues(NUMBERS_AMOUNT),
+    );
     this.setState(() => {
       return {
         data: this.sortAlgorithm.getData(),
