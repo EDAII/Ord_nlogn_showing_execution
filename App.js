@@ -8,9 +8,8 @@ import ShellSort from './src/algorithms/ShellSort';
 
 // 0: slowest, 500: fastest
 const DEFAULT_SORT_SPEED = 5;
-const MAX_SPEED = 500;
-const MIN_SPEED = 0;
-const NUMBERS_AMOUNT = 50;
+const MAX_SPEED = 100;
+const MIN_SPEED = 0.000000001;
 
 export default class App extends React.Component {
   sortAlgorithm;
@@ -19,6 +18,8 @@ export default class App extends React.Component {
   state = {
     data: [10, 15, 230, 50],
     speed: DEFAULT_SORT_SPEED,
+    color: '#FFA000',
+    qtd: 50,
   };
 
   componentDidMount() {
@@ -46,71 +47,88 @@ export default class App extends React.Component {
   generateRandomValues(amount) {
     let values = [];
     for (var i = 0; i < amount; i++) {
-      values[i] = parseInt(Math.random() * NUMBERS_AMOUNT + 1);
+      values[i] = parseInt(Math.random() * this.state.qtd + 1);
     }
     return values;
   }
 
   setBubbleSort() {
     this.sortAlgorithm = new BubbleSort(
-      this.generateRandomValues(NUMBERS_AMOUNT),
+      this.generateRandomValues(this.state.qtd),
     );
     this.setState(() => {
       return {
         data: this.sortAlgorithm.getData(),
+        color: '#FFA000',
       };
     });
   }
 
   setQuickSort() {
     this.sortAlgorithm = new QuickSort(
-      this.generateRandomValues(NUMBERS_AMOUNT),
+      this.generateRandomValues(this.state.qtd),
     );
     this.setState(() => {
       return {
         data: this.sortAlgorithm.getData(),
+        color: '#FF5722',
       };
     });
   }
 
   setMergeSort() {
     this.sortAlgorithm = new MergeSort(
-      this.generateRandomValues(NUMBERS_AMOUNT),
+      this.generateRandomValues(this.state.qtd),
     );
     this.setState(() => {
       return {
         data: this.sortAlgorithm.getData(),
+        color: '#FF5722',
       };
     });
   }
 
   setShellSort() {
     this.sortAlgorithm = new ShellSort(
-      this.generateRandomValues(NUMBERS_AMOUNT),
+      this.generateRandomValues(this.state.qtd),
     );
     this.setState(() => {
       return {
         data: this.sortAlgorithm.getData(),
+        color: '#FF5722',
       };
     });
   }
 
   render() {
+    const {data, color, speed, qtd} = this.state;
     return (
       <View style={styles.container}>
         <Text style={styles.title}>Algoritmos de Ordenação</Text>
-        <VictoryBar data={this.state.data} style={{data: {fill: '#1976D2'}}} />
+        <VictoryBar data={data} style={{data: {fill: color}}} />
+        <Text style={styles.text}>Quantidade: {qtd}</Text>
+        <Slider
+          maximumTrackTintColor="white"
+          minimumTrackTintColor="#FFA000"
+          style={{width: 300}}
+          step={1}
+          minimumValue={10}
+          value={qtd}
+          maximumValue={300}
+          onValueChange={val => {
+            this.setState({qtd: val});
+          }}
+        />
         <Text style={styles.text}>
-          Speed:{' '}
-          {Math.floor((this.state.speed * 100) / (MAX_SPEED - MIN_SPEED))}%
+          Velocidade: {Math.floor((speed * 100) / (MAX_SPEED - MIN_SPEED))}%
         </Text>
         <Slider
-          maximumTrackTintColor='white'
-          minimumTrackTintColor='#1976D2'
+          maximumTrackTintColor="white"
+          minimumTrackTintColor="#FFA000"
           style={{width: 300}}
-          step={2}
+          step={0.00000001}
           minimumValue={0}
-          value={this.state.speed}
+          value={speed}
           maximumValue={MAX_SPEED - MIN_SPEED}
           onValueChange={val => {
             this.setState({speed: val});
@@ -118,22 +136,22 @@ export default class App extends React.Component {
           }}
         />
         <Button
-          color="#BBDEFB"
+          color="#FFA000"
           title="bubble sort"
           onPress={this.setBubbleSort.bind(this)}
         />
         <Button
-          color="#BBDEFB"
+          color="#FF5722"
           title="merge sort"
           onPress={this.setMergeSort.bind(this)}
         />
         <Button
-          color="#536DFE"
+          color="#FF5722"
           title="quick sort"
           onPress={this.setQuickSort.bind(this)}
         />
         <Button
-          color="#536DFE"
+          color="#FF5722"
           title="shell sort"
           onPress={this.setShellSort.bind(this)}
         />
@@ -157,5 +175,5 @@ const styles = StyleSheet.create({
   },
   text: {
     color: 'white',
-  }
+  },
 });
