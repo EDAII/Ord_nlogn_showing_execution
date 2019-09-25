@@ -27,6 +27,9 @@ promovendo uma interface mobile que permite que o usuário escolha a quantidade 
 
 ## Capturas de tela
 
+
+![print](/docs/img/print.jpg )
+
 ## Conclusões
 
 Tivemos que implementar os algoritmos utilizando o modelo de classes para que o passo a passo seja apresentado visualmente, pegamos os algoritmos em JavaScript no formato de função e passamos para o formato de classe.
